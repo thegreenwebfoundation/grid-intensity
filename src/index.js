@@ -8,7 +8,6 @@ const intensityProvider = settings.uk
 
 function GridIntensity() {
   this.data = []
-  this.carbonIndex = 'low'
 }
 
 function getLocalStoragePolyFill() {
@@ -26,16 +25,8 @@ GridIntensity.prototype.setup = async function () {
   this.data = this.getLocalIntensityData()
 
   if (this.data.length < 1) {
-    fetchNewData = true
-  }
-
-
-
-
-  if (fetchNewData) {
     this.data = await this.fetchIntensityData()
   }
-
 }
 GridIntensity.prototype.getLocalIntensityData = function () {
   //  if we're not in a browser, use a localstorage polyfill
@@ -59,14 +50,29 @@ GridIntensity.prototype.getLocalIntensityData = function () {
   }
 }
 
-GridIntensity.prototype.getCarbonIndex = function () {
+GridIntensity.prototype.getCarbonIndex = async function (options) {
+  let now
+  if (options && options.checkDate) {
+    now = options.checkDate
+  } else {
+    now = new Date()
+  }
+
+  let latestReading = this.data.data[this.data.data.length - 1]
+  const latestReadingDate = Date.parse(latestReading.to)
+
+  if (now > latestReadingDate) {
+    // fetch new data, as this out of date
+    this.data = await this.fetchIntensityData()
+    latestReading = this.data.data[0]
+  }
+  return latestReading.intensity.index
 
 }
 
 GridIntensity.prototype.fetchIntensityData = async function () {
   let res = await fetch(intensityProvider.api.current)
   this.data = await res.json()
-  // TODO: stash in local storage if available
   return this.data
 }
 
