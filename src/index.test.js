@@ -9,7 +9,7 @@ describe("GridIntensity", () => {
     let fakeData
 
     beforeEach(() => {
-      fakeData = JSON.parse('{"data":[{"from":"2020-09-19T11:30Z","to":"2020-09-19T12:00Z","intensity":{"forecast":83,"actual":85,"index":"low"}}]}')
+      fakeData = '{"data":[{"from":"2020-09-19T11:30Z","to":"2020-09-19T12:00Z","intensity":{"forecast":83,"actual":85,"index":"low"}}]}'
     })
 
     test("fetches data on instantion, if nothing is available locally", async () => {
@@ -35,7 +35,23 @@ describe("GridIntensity", () => {
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
       expect(grid.getLocalIntensityData).toHaveBeenCalledTimes(1)
     })
-    test.todo("makes new request for data if local store is out of date")
+    test("makes new request for data if local store is out of date", () => {
+      // arrange
+      const grid = new GridIntensity()
+      grid.data = JSON.parse(fakeData)
+      grid.fetchIntensityData = jest.fn()
+
+      // act
+      grid.getCarbonIndex()
+
+      console.log(grid.data.data.pop().to)
+      // console.log(grid.data.data)
+      console.log(new Date().toISOString())
+
+      // assert
+      expect(grid.fetchIntensityData).toHaveBeenCalled()
+    })
+
   })
   describe("exposing intensity data API", () => {
     test.todo("returns high carbonindex value")
