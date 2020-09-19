@@ -52,15 +52,16 @@ We call this the *fuel mix*, and this fuel mix can impact on the *carbon intensi
 
 Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run *when* the grid is greener, or making it run *where* it's greener, like a CDN running on green power.
 
-This API is designed to make that easier. It pulls data from open APIs about the predicted carbon intensity of energy on the grid where code is run, and presents an object you can query, so you can make an application or website serve a different experience to end users based on the carbon intensity.
+This API is designed to make that easier. It pulls data from open data sources, about the predicted carbon intensity of energy on the grid where code is run, and presents an object you can query, so you can make an application or website serve a different experience to end users based on the carbon intensity.
 
 
 ### TODO
 
-_This is very incomplete - sorry.
+_This is very incomplete. Sorry about that. I hope this gives an idea of where you can help if you're interested._
 
 - [ ] Add support for API providers beyond the UK national grid
+- [ ] Add a 24 hour forward looking check, so there's less need to hit a single API endpoint.
 - [ ] Add geo support to either use geolocation features in a browser, or some kind of educated guesses serverside so we use the correct country for grid intensity
 - [ ] Write post to explain the idea in more detail
-- [ ] Flesh out issues in more detail, and guidelines for contribution.
-- [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default.
+- [ ] Flesh out issues, and guidelines for contribution.
+- [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default. `user-agents` of change!
