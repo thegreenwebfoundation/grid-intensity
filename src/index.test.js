@@ -16,13 +16,25 @@ describe("GridIntensity", () => {
       const grid = new GridIntensity()
 
       grid.fetchIntensityData = jest.fn(x => {
-        return Promise.resolve(fakeData)
+        return fakeData
       })
       await grid.setup()
 
       // expect the fetch API to be called
       expect(grid.fetchIntensityData).toHaveBeenCalled()
     })
+    test("fetches data on instantion, recovers gracefully when no data from API", async () => {
+      const grid = new GridIntensity()
+
+      grid.fetchIntensityData = jest.fn(x => {
+        return Promise.resolve([])
+      })
+      await grid.setup()
+
+      // expect the fetch API to be called
+      expect(grid.fetchIntensityData).toHaveBeenCalled()
+    })
+
     test("uses a local store when created if available", async () => {
       const grid = new GridIntensity()
       grid.data = fakeData
@@ -34,7 +46,40 @@ describe("GridIntensity", () => {
       grid.setup()
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
       expect(grid.getLocalIntensityData).toHaveBeenCalledTimes(1)
+      console.log("indtensityDAta", grid.getLocalIntensityData())
+      expect(grid.getLocalIntensityData).toHaveLength(1)
     })
+
+    test("uses data from local store when present", async () => {
+      const grid = new GridIntensity()
+      grid.data = fakeData
+      grid.getLocalIntensityData = jest.fn(x => {
+        return fakeData
+      })
+      grid.fetchIntensityData = jest.fn()
+
+      grid.setup()
+
+      //
+
+    })
+
+
+
+    test("recovers gracefully when no data from localstorage", async () => {
+      const grid = new GridIntensity()
+
+      grid.getLocalIntensityData = jest.fn(x => {
+        return Promise.resolve([])
+      })
+      await grid.setup()
+
+      // expect the fetch API to be called
+      expect(grid.getLocalIntensityData).toHaveBeenCalled()
+    })
+
+
+
     test("makes new request for data if local store is out of date", () => {
       // arrange
       const grid = new GridIntensity()

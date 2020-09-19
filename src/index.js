@@ -33,14 +33,15 @@ GridIntensity.prototype.getLocalIntensityData = function () {
 
   // otherwise we're in a browser
   const data = storage.getItem('gridIntensityData')
-
   // we have no local data - return early
-  if (data.length < 1) {
+  if (!data || data.length < 1) {
     return []
   }
-  // try to parsing what we already have
+  console.log(data)
+  // try to parse what we already have
   try {
     parsed_data = JSON.parse(data)
+    console.log(parsed_data)
     return parsed_data
   } catch (err) {
     debug(`error, parsing the stored JSON`, err)
