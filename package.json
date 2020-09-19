@@ -4,7 +4,7 @@
   "description": "A polyfill to for carbon-aware design. Adds a gridintensity API to user agents.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Chris Adams",
   "license": "Apache-2.0",
