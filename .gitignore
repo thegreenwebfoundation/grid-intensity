@@ -37,12 +37,10 @@ jspm_packages
 lib
 
 # npm package lock
-package-lock.json
+# package-lock.json
 yarn.lock
 
 others
 .DS_Store
 
 .vscode
-
-package-lock.json
