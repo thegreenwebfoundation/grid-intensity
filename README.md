@@ -65,3 +65,4 @@ _This is very incomplete. Sorry about that. I hope this gives an idea of where y
 - [ ] Write post to explain the idea in more detail
 - [ ] Flesh out issues, and guidelines for contribution.
 - [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default. `user-agents` of change!
+- [ ] Publish to NPM, and generate the compiled regular js into lib
