@@ -3,7 +3,7 @@
 
 _A polyfill, to build awareness of carbon intensity into javascript programs - move your code through time and space for greener digital products._
 
-###
+## Usage
 
 ```js
 const GridIntensity = require('gridintensity-polyfill')
@@ -40,9 +40,7 @@ if (carbonIndex == 'low')  {
 }
 ```
 
-
 ### Background
-
 
 We know that the internet runs on electricity. That electricity comes from a mix of energy sources, including wind and solar, nuclear power, biomass, fossil gas, oil and coal and so on,
 
@@ -53,7 +51,6 @@ We call this the *fuel mix*, and this fuel mix can impact on the *carbon intensi
 Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run *when* the grid is greener, or making it run *where* it's greener, like a CDN running on green power.
 
 This API is designed to make that easier. It pulls data from open data sources, about the predicted carbon intensity of energy on the grid where code is run, and presents an object you can query, so you can make an application or website serve a different experience to end users based on the carbon intensity.
-
 
 ### TODO
 
@@ -66,3 +63,4 @@ _This is very incomplete. Sorry about that. I hope this gives an idea of where y
 - [ ] Flesh out issues, and guidelines for contribution.
 - [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default. `user-agents` of change!
 - [ ] Publish to NPM, and generate the compiled regular js into lib
+- [ ] For browsers, include check for the kinf of connection on a webpage

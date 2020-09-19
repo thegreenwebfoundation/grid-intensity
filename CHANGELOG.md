@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add initial gridintensity object for querying in the DOM.
+- Add initial gridintensity object for querying in the DOM, and serverside in Node.

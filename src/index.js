@@ -3,7 +3,6 @@ const debug = debugLib("tgwf:gridIntensity")
 import fetch from 'cross-fetch';
 import settings from './defaultSettings'
 
-// console.log(settings)
 const intensityProvider = settings.uk
 
 function GridIntensity() {
@@ -58,6 +57,9 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
     now = new Date()
   }
 
+  // this only fetches the last date. If we fetch more dates ahead, we need to
+  // find the most closest date in the set to now, as we'd have more than
+  // one to choose from
   let latestReading = this.data.data[this.data.data.length - 1]
   const latestReadingDate = Date.parse(latestReading.to)
 

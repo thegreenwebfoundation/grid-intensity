@@ -2,23 +2,25 @@
   "name": "gridintensity-polyfill",
   "version": "0.0.1",
   "description": "A polyfill to for carbon-aware design. Adds a gridintensity API to user agents.",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest",
+    "build": "babel src --out-dir lib"
   },
   "author": "Chris Adams",
   "license": "Apache-2.0",
   "dependencies": {
     "cross-fetch": "^3.0.6",
     "network-information-api-polyfill": "0.0.2",
-    "node-localstorage": "^2.1.6",
-    "np": "^6.5.0"
+    "node-localstorage": "^2.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
+    "babel-cli": "^6.26.0",
     "babel-jest": "^26.3.0",
     "jest": "^26.4.2",
+    "np": "^6.5.0",
     "prettier-eslint": "^11.0.0"
   }
 }
