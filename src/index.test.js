@@ -1,4 +1,4 @@
-import gridIntensity from "./index"
+import { GridIntensity } from "./index"
 import debugLib from "debug"
 const debug = debugLib("tgwf:test:gridIntensity")
 
@@ -6,8 +6,35 @@ const debug = debugLib("tgwf:test:gridIntensity")
 // not sure how to mock this, so using an array here as it's the slowest part of the test
 describe("GridIntensity", () => {
   describe("fetching intensity data", () => {
-    test.todo("fetches data on instantion, if nothing is available locally")
-    test.todo("uses a local store when created if available")
+    let fakeData
+
+    beforeEach(() => {
+      fakeData = JSON.parse('{"data":[{"from":"2020-09-19T11:30Z","to":"2020-09-19T12:00Z","intensity":{"forecast":83,"actual":85,"index":"low"}}]}')
+    })
+
+    test("fetches data on instantion, if nothing is available locally", async () => {
+      const grid = new GridIntensity()
+
+      grid.fetchIntensityData = jest.fn(x => {
+        return Promise.resolve(fakeData)
+      })
+      await grid.setup()
+
+      // expect the fetch API to be called
+      expect(grid.fetchIntensityData).toHaveBeenCalled()
+    })
+    test("uses a local store when created if available", async () => {
+      const grid = new GridIntensity()
+      grid.data = fakeData
+      grid.getLocalIntensityData = jest.fn(x => {
+        return fakeData
+      })
+      grid.fetchIntensityData = jest.fn()
+
+      grid.setup()
+      expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
+      expect(grid.getLocalIntensityData).toHaveBeenCalledTimes(1)
+    })
     test.todo("makes new request for data if local store is out of date")
   })
   describe("exposing intensity data API", () => {
