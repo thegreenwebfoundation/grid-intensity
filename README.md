@@ -6,25 +6,26 @@ _A polyfill, to build awareness of carbon intensity into javascript programs - m
 ###
 
 ```js
-const gridIntensity = require('gridintensity-polyfill')
+const GridIntensity = require('gridintensity-polyfill')
 
 // initialise
-carbonIntensity = gridIntensity()
+gridIntensity = GridIntensity()
 
-if (carbonIntensity.carbonIndex == 'low')  {
-  // energy is cheap, the wind is blowing and the sun is out
-  // make YAY while the sun is shining
+const carbonIndex = await gridIntensity.getCarbonIndex()
+
+if (carbonIndex == 'low')  {
+  // Huzzah! Energy is cheap! The wind is blowing and the sun is out,
+  // the cost of energy is low, and the grid is also greener
+  // than normal. Do network and CPU intensive stuff
 
   loadrichImages()
 
-  // we might do this now, instead of later - the cost of energy is low,
-  // but the grid is also greener than normal, so the carbon cost is
-  // lower too
   await Promise.all([
     doExpensiveOperation(), preLoadVideo()
   ])
+
 } else {
-  // eep - our grid is relying on more fossil fuels than usual, so
+  // Eep - our grid is relying on more fossil fuels than usual, so
   // let's defer work til later, and serve a lighter weight experience
   // by default
   loadLiteImages()
@@ -49,6 +50,17 @@ We call this the *fuel mix*, and this fuel mix can impact on the *carbon intensi
 
 ### Move your code through time and space
 
-Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run *when* the grid is greener, or making it run *where* it's greener, like a CDN running on green power,
+Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run *when* the grid is greener, or making it run *where* it's greener, like a CDN running on green power.
 
 This API is designed to make that easier. It pulls data from open APIs about the predicted carbon intensity of energy on the grid where code is run, and presents an object you can query, so you can make an application or website serve a different experience to end users based on the carbon intensity.
+
+
+### TODO
+
+_This is very incomplete - sorry.
+
+- [ ] Add support for API providers beyond the UK national grid
+- [ ] Add geo support to either use geolocation features in a browser, or some kind of educated guesses serverside so we use the correct country for grid intensity
+- [ ] Write post to explain the idea in more detail
+- [ ] Flesh out issues in more detail, and guidelines for contribution.
+- [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default.
