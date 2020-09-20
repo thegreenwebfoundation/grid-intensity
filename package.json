@@ -3,6 +3,10 @@
   "version": "0.0.3",
   "description": "A polyfill to for carbon-aware design. Adds a gridintensity API to user agents.",
   "main": "./lib/index.js",
+  "directories": {
+    "lib": "./lib",
+    "src": "./src"
+  },
   "scripts": {
     "test": "jest",
     "build": "babel src --out-dir lib"
