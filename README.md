@@ -3,6 +3,13 @@
 
 _A polyfill, to build awareness of carbon intensity into javascript programs - move your code through time and space for greener digital products._
 
+The dream is for this to be built into the browser, so we learn as web makers to do the right thing by default, and incorporate carbon-aware practices into how we work. Partly inspired by the work by [Michelle Thorne and Yulia Startsev on Firefox Eco Mode concepts][1] and sustainablity engineering, and by [Lucia Ye's recent  work on Onlign OS][2], and [David Sykes work on the energy onion model][3], and [Auke Hoekste's work on energy systems as ecosystems][4]
+
+[1]: https://discourse.mozilla.org/t/firefox-eco-mode-brainstorming-how-can-the-internet-tackle-the-climate-emergency/46582/2
+[2]: https://2020.rca.ac.uk/students/lu-ye/
+[3]: https://medium.com/@david.sykes70/the-energy-onion-a-simple-conceptual-model-for-a-smart-system-3c1f2c5cbd1a
+[4]: https://twitter.com/AukeHoekstra/status/1234071607724978176
+
 ## Usage
 
 ```js
