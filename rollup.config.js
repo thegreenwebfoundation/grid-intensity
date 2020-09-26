@@ -4,10 +4,10 @@ import commonjs from '@rollup/plugin-commonjs';
 import babel from '@rollup/plugin-babel';
 
 export default {
-  input: 'src/browser.js',
+  input: 'src/bundle.js',
   output: {
     file: 'public/main.js',
-    format: 'iife'
+    format: 'iife',
   },
   plugins: [
     resolve(),
