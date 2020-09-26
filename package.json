@@ -23,10 +23,14 @@
     "@babel/core": "^7.11.6",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
+    "@rollup/plugin-babel": "^5.2.1",
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "babel-jest": "^26.3.0",
     "jest": "^26.4.2",
     "np": "^6.5.0",
-    "prettier-eslint": "^11.0.0"
+    "prettier-eslint": "^11.0.0",
+    "rollup": "^2.28.2",
   },
   "publishConfig": {
     "access": "public"
