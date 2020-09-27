@@ -2,9 +2,29 @@
 
 <head>
   <meta charset=utf-8>
+
+
+  <style>
+    .low-grid-intensity {
+      background-color: #1CDCB4;
+      transition-duration: 1s;
+    }
+
+    .med-grid-intensity {
+      background-color: #51AEE2;
+      transition-duration: 1s;
+    }
+
+    .high-grid-intensity {
+      background-color: #FF7900;
+      transition-duration: 1s;
+    }
+  </style>
 </head>
 
-<body>
+
+
+<body class="">
 
   <h1>
     The grid intensity in your part of the world right now is:
@@ -13,7 +33,23 @@
     (result goes here)
   </h2>
 
-  <script src="./main.js"></script>
+
+  <script src="./gridintensity.browser.min.js"></script>
+  <script>
+    async function main() {
+      const grid = new GridIntensity()
+      await grid.setup()
+      const index = await grid.getCarbonIndex()
+      console.log({ index })
+      document.querySelector('.result').textContent = index
+      document.querySelector('body').classList = []
+      document.querySelector('body').classList.add(`${index}-grid-intensity`)
+
+
+    }
+    main()
+
+  </script>
 </body>
 
 </html>

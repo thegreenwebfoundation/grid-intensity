@@ -7,11 +7,21 @@ import { terser } from 'rollup-plugin-terser';
 
 
 const browserBuild = {
-  input: 'src/bundle.js',
+  input: 'src/browser.js',
   output: {
-    file: 'public/main.js',
+    file: 'public/gridintensity.browser.js',
     format: 'iife',
     name: "GridItensity"
+  },
+  plugins: [
+    resolve(),
+  ]
+}
+
+const browserBuildMin = {
+  input: 'src/browser.bundle.js',
+  output: {
+    file: 'public/gridintensity.browser.min.js'
   },
   plugins: [
     resolve(),
@@ -19,6 +29,8 @@ const browserBuild = {
     terser()
   ]
 }
+
+
 
 const nodeBuild = {
   input: 'src/node.js',
@@ -46,5 +58,6 @@ const nodeBuild = {
 
 export default [
   browserBuild,
+  browserBuildMin,
   nodeBuild
 ];
