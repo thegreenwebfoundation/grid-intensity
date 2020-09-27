@@ -41,6 +41,10 @@ GridIntensity.prototype.getLocalIntensityData = function () {
     return []
   }
 }
+GridIntensity.prototype.getNextInterval = function () {
+  return this.data.data[this.data.data.length - 1]
+}
+
 
 GridIntensity.prototype.getCarbonIndex = async function (options) {
   let now
@@ -53,7 +57,7 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   // this only fetches the last date. If we fetch more dates ahead, we need to
   // find the most closest date in the set to now, as we'd have more than
   // one to choose from
-  let latestReading = this.data.data[this.data.data.length - 1]
+  let latestReading = this.getNextInteral()
   const latestReadingDate = DateTime.fromISO(latestReading.to, { zone: "utc" })
   console.log(now.toISO(), latestReadingDate.toISO())
 
