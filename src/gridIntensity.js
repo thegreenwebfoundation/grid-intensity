@@ -24,39 +24,57 @@ GridIntensity.prototype.getLocalIntensityData = function () {
   let storage = this.localStorage
 
   // otherwise we're in a browser
-  const data = storage.getItem('gridIntensityData')
-  // we have no local data - return early
-  if (!data || data.length < 1) {
+  const intervalsString = (storage.getItem('gridIntensityData'))
+
+  if (!intervalsString) {
     return []
   }
-  console.log(data)
+
+  // we have no local data - return early
+  if (!intervalsString.length) {
+    return []
+  }
+  // if (intervals.data.length < 1) {
+  //   return []
+  // }
+
+
+  // console.log(intervals.data)
   // try to parse what we already have
   try {
-    parsed_data = JSON.parse(data)
-    console.log(parsed_data)
-    return parsed_data
+    parsedIntervals = JSON.parse(intervalsString)
+    console.log({ parsedIntervals })
+    return parsedIntervals
   } catch (err) {
     // debug(`error, parsing the stored JSON`, err)
     storage.setItem('gridIntensityData', [])
     return []
   }
 }
-GridIntensity.prototype.getNextInterval = function () {
+GridIntensity.prototype.getNextInterval = function (options) {
   // returns very next 30 minute interval from the list of intervals
   // loops forward through the intervals, checking it the time now is
   // greater, and returns the first one to be greater than now, AND less than
   // 31mins ahead too
-  let nextInterval = null
-  const now = DateTime.utc();
-  console.log({ data: this.data.data })
+
+
+  let now
+  if (options && options.checkDate) {
+    now = options.checkDate
+  } else {
+    now = DateTime.utc();
+  }
+  // console.debug({ now: now.toISO() })
+  // console.debug({ data: this.data.data })
   for (const inter of this.data.data) {
     const until = DateTime.fromISO(inter.to)
     if (until > now) {
-      console.log(inter)
+      // console.debug({ now: now.toISO() }, { until: until.toISO() })
       return inter
     }
   }
-  throw new Error("No further intervals stored in data")
+  return null
+
 }
 
 
@@ -71,15 +89,26 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   // this only fetches the last date. If we fetch more dates ahead, we need to
   // find the most closest date in the set to now, as we'd have more than
   // one to choose from
-  let latestReading = this.getNextInteral()
+
+  let latestReading
+  latestReading = this.getNextInterval({ checkDate: now })
+  if (!latestReading) {
+    // fetch new data, and try again
+    const newIntervals = await this.fetchIntensityData()
+    let storage = this.localStorage
+    storage.setItem('gridIntensityData', JSON.stringify(newIntervals))
+    this.data = newIntervals
+    latestReading = this.getNextInterval({ checkDate: now })
+  }
+
   const latestReadingDate = DateTime.fromISO(latestReading.to, { zone: "utc" })
-  console.log(now.toISO(), latestReadingDate.toISO())
+  // console.debug(now.toISO(), latestReadingDate.toISO())
 
 
   if (now > latestReadingDate) {
-    console.debug({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+    // console.debug({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
   } else {
-    console.debug({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+    // console.debug({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
   }
 
   if (now > latestReadingDate) {

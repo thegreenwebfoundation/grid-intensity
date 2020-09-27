@@ -1,7 +1,7 @@
 import GridIntensity from "./node"
 import debugLib from "debug"
 const debug = debugLib("tgwf:test:gridIntensity")
-import { DateTime } from 'luxon'
+import { DateTime, Interval } from 'luxon'
 
 // not sure how to mock this, so using an array here as it's the slowest part of the test
 describe("GridIntensity", () => {
@@ -46,7 +46,7 @@ describe("GridIntensity", () => {
       grid.setup()
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
       expect(grid.getLocalIntensityData).toHaveBeenCalledTimes(1)
-      console.log("indtensityDAta", grid.getLocalIntensityData())
+      // console.log("indtensityDAta", grid.getLocalIntensityData())
       expect(grid.getLocalIntensityData).toHaveLength(1)
     })
 
@@ -101,7 +101,9 @@ describe("GridIntensity", () => {
     beforeEach(() => {
       grid = new GridIntensity()
       data = JSON.parse(fakeData)
-      grid.fetchIntensityData = jest.fn()
+      grid.fetchIntensityData = jest.fn(x => {
+        return Promise.resolve(data)
+      })
     })
 
     test("returns high carbonindex value", async () => {
@@ -137,5 +139,31 @@ describe("GridIntensity", () => {
       expect(result).toBe('low')
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
     })
+  })
+  describe("fetching next intensity interval", () => {
+
+    let grid, data
+    beforeEach(() => {
+      grid = new GridIntensity()
+      data = JSON.parse(fakeData)
+      // grid.fetchIntensityData = jest.fn()
+    })
+
+    test("returns the next valid interval when present", async () => {
+      grid.data = data
+      // act
+      const now = DateTime.fromISO("2020-09-19T11:40Z")
+      const result = await grid.getNextInterval({ checkDate: now })
+      // console.log({ to: result.to })
+      const to = DateTime.fromISO(result.to)
+
+      // assert
+      // is the next interval less than 31 miutes ahead?
+      const minutesAhead = Interval.fromDateTimes(now, to).toDuration('minutes').toObject().minutes
+      expect(minutesAhead).toBeLessThan(31)
+      expect(minutesAhead).toBeGreaterThan(0)
+      // is the interval ahead
+    })
+
   })
 })
