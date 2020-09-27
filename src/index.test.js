@@ -1,7 +1,7 @@
 import GridIntensity from "./node"
 import debugLib from "debug"
 const debug = debugLib("tgwf:test:gridIntensity")
-
+import { DateTime } from 'luxon'
 
 // not sure how to mock this, so using an array here as it's the slowest part of the test
 describe("GridIntensity", () => {
@@ -109,7 +109,7 @@ describe("GridIntensity", () => {
       data.data[0].intensity.index = 'high'
       grid.data = data
       // act
-      const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
+      const result = await grid.getCarbonIndex({ checkDate: DateTime.fromISO("2020-09-19T11:40Z") })
 
       // assert
       expect(result).toBe('high')
@@ -120,7 +120,7 @@ describe("GridIntensity", () => {
       data.data[0].intensity.index = 'med'
       grid.data = data
       // act
-      const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
+      const result = await grid.getCarbonIndex({ checkDate: DateTime.fromISO("2020-09-19T11:40Z") })
 
       // assert
       expect(result).toBe('med')
@@ -131,7 +131,7 @@ describe("GridIntensity", () => {
       data.data[0].intensity.index = 'low'
       grid.data = data
       // act
-      const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
+      const result = await grid.getCarbonIndex({ checkDate: DateTime.fromISO("2020-09-19T11:40Z") })
 
       // assert
       expect(result).toBe('low')

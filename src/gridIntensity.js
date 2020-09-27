@@ -1,6 +1,7 @@
 
 // import fetch from 'cross-fetch';
 import settings from './defaultSettings'
+import { DateTime, Interval } from 'luxon'
 
 const intensityProvider = settings.uk
 
@@ -46,20 +47,29 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   if (options && options.checkDate) {
     now = options.checkDate
   } else {
-    now = new Date()
+    now = DateTime.utc();
   }
 
   // this only fetches the last date. If we fetch more dates ahead, we need to
   // find the most closest date in the set to now, as we'd have more than
   // one to choose from
   let latestReading = this.data.data[this.data.data.length - 1]
-  const latestReadingDate = Date.parse(latestReading.to)
+  const latestReadingDate = DateTime.fromISO(latestReading.to, { zone: "utc" })
+  console.log(now.toISO(), latestReadingDate.toISO())
+
+
+  if (now > latestReadingDate) {
+    console.log({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+  } else {
+    console.log({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+  }
 
   if (now > latestReadingDate) {
     // fetch new data, as this out of date
     this.data = await this.fetchIntensityData()
     latestReading = this.data.data[0]
   }
+
   return latestReading.intensity.index
 
 }
