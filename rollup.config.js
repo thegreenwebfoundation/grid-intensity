@@ -17,13 +17,6 @@ const browserBuild = {
     resolve(),
     babel({ babelHelpers: 'bundled' }),
     terser()
-    // getBabelOutputPlugin({
-    //   allowAllFormats: true,
-    //   plugins: [
-    //     // "@babel/plugin-transform-runtime"
-    //   ],
-    //   presets: [['@babel/preset-env']]
-    // })
   ]
 }
 
