@@ -1,4 +1,4 @@
-import { GridIntensity } from "./index"
+import GridIntensity from "./node"
 import debugLib from "debug"
 const debug = debugLib("tgwf:test:gridIntensity")
 
