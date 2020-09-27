@@ -5,11 +5,7 @@ import GridIntensity from './gridIntensity'
 
 const localStorage = new LocalStorage('./scratch');
 
-GridIntensity.prototype.getLocalStoragePolyFill = function () {
-  return localStorage
-}
-GridIntensity.prototype.getFetch = function () {
-  return fetch
-}
+GridIntensity.prototype.fetch = fetch
+GridIntensity.prototype.localStorage = localStorage
 
 export default GridIntensity

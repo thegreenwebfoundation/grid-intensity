@@ -6,7 +6,7 @@ const intensityProvider = settings.uk
 
 function GridIntensity() {
   this.data = []
-  this.localStorage = this.getLocalStoragePolyFill()
+  this.intensityProvider = intensityProvider
 }
 
 
@@ -20,7 +20,7 @@ GridIntensity.prototype.setup = async function (localStorage, fetch) {
 }
 GridIntensity.prototype.getLocalIntensityData = function () {
   //  if we're not in a browser, use a localstorage polyfill
-  let storage = this.getLocalStoragePolyFill()
+  let storage = this.localStorage
 
   // otherwise we're in a browser
   const data = storage.getItem('gridIntensityData')
@@ -65,7 +65,7 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
 }
 
 GridIntensity.prototype.fetchIntensityData = async function () {
-  let res = await fetch(intensityProvider.api.current)
+  let res = await this.fetch(intensityProvider.api.current)
   this.data = await res.json()
   return this.data
 }

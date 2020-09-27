@@ -1,4 +1,4 @@
-import { GridIntensity } from './browser'
+import GridIntensity from './browser'
 
 async function main() {
   const grid = new GridIntensity()

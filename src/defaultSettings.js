@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   uk: {
     api: {
       current: "https://api.carbonintensity.org.uk/intensity",
