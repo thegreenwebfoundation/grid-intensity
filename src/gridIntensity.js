@@ -42,7 +42,21 @@ GridIntensity.prototype.getLocalIntensityData = function () {
   }
 }
 GridIntensity.prototype.getNextInterval = function () {
-  return this.data.data[this.data.data.length - 1]
+  // returns very next 30 minute interval from the list of intervals
+  // loops forward through the intervals, checking it the time now is
+  // greater, and returns the first one to be greater than now, AND less than
+  // 31mins ahead too
+  let nextInterval = null
+  const now = DateTime.utc();
+  console.log({ data: this.data.data })
+  for (const inter of this.data.data) {
+    const until = DateTime.fromISO(inter.to)
+    if (until > now) {
+      console.log(inter)
+      return inter
+    }
+  }
+  throw new Error("No further intervals stored in data")
 }
 
 
@@ -63,9 +77,9 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
 
 
   if (now > latestReadingDate) {
-    console.log({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+    console.debug({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
   } else {
-    console.log({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
+    console.debug({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
   }
 
   if (now > latestReadingDate) {
