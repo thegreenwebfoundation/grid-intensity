@@ -10,7 +10,9 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "rollup --config"
+    "build": "rollup --config",
+    "prepublish": "rollup --config",
+    "clean": "rm -rf ./lib/* && rm -rf ./scratch"
   },
   "author": "Chris Adams",
   "license": "Apache-2.0",
