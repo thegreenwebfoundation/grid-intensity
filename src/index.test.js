@@ -1,6 +1,5 @@
 import GridIntensity from "./node"
-import debugLib from "debug"
-const debug = debugLib("tgwf:test:gridIntensity")
+
 
 
 // not sure how to mock this, so using an array here as it's the slowest part of the test
@@ -46,7 +45,7 @@ describe("GridIntensity", () => {
       grid.setup()
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
       expect(grid.getLocalIntensityData).toHaveBeenCalledTimes(1)
-      console.log("indtensityDAta", grid.getLocalIntensityData())
+      // console.log("indtensityDAta", grid.getLocalIntensityData())
       expect(grid.getLocalIntensityData).toHaveLength(1)
     })
 
@@ -101,7 +100,9 @@ describe("GridIntensity", () => {
     beforeEach(() => {
       grid = new GridIntensity()
       data = JSON.parse(fakeData)
-      grid.fetchIntensityData = jest.fn()
+      grid.fetchIntensityData = jest.fn(x => {
+        return Promise.resolve(data)
+      })
     })
 
     test("returns high carbonindex value", async () => {
@@ -110,6 +111,7 @@ describe("GridIntensity", () => {
       grid.data = data
       // act
       const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
+
 
       // assert
       expect(result).toBe('high')
@@ -120,7 +122,9 @@ describe("GridIntensity", () => {
       data.data[0].intensity.index = 'med'
       grid.data = data
       // act
+
       const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
+
 
       // assert
       expect(result).toBe('med')
@@ -133,9 +137,34 @@ describe("GridIntensity", () => {
       // act
       const result = await grid.getCarbonIndex({ checkDate: Date.parse("2020-09-19T11:40Z") })
 
+
       // assert
       expect(result).toBe('low')
       expect(grid.fetchIntensityData).toHaveBeenCalledTimes(0)
     })
+  })
+  describe("fetching next intensity interval", () => {
+
+    let grid, data
+    beforeEach(() => {
+      grid = new GridIntensity()
+      data = JSON.parse(fakeData)
+      // grid.fetchIntensityData = jest.fn()
+    })
+
+    test("returns the next valid interval when present", async () => {
+      grid.data = data
+      // act
+      const now = Date.parse("2020-09-19T11:40Z")
+      const result = await grid.getNextInterval({ checkDate: now })
+
+      // assert
+      // is the next interval less than 31 miutes ahead?
+      // const minutesAhead = Interval.fromDateTimes(now, to).toDuration('minutes').toObject().minutes
+      // expect(minutesAhead).toBeLessThan(31)
+      // expect(minutesAhead).toBeGreaterThan(0)
+      // is the interval ahead
+    })
+
   })
 })
