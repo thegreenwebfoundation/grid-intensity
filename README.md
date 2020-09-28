@@ -13,7 +13,7 @@ The dream is for this to be built into the browser, so we learn as web makers to
 ## Usage
 
 ```js
-import GridIntensity from '@tgwf/grid-intensity'
+import GridIntensity from '@tgwf/grid-intensity-polyfill'
 
 // initialise
 grid = GridIntensity()
@@ -46,6 +46,17 @@ if (carbonIndex == 'low')  {
   ])
 }
 ```
+
+### Quick demo
+
+There's a public demo in the github repo, to try this out. Run these commands after checking the code to see it
+
+```
+npm run build
+cp ./lib/gridintensity.browser.js ./lib/gridintensity.browser.min.js ./public
+npx run serve public
+```
+
 
 ### Background
 
