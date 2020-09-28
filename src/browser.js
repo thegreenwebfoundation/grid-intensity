@@ -1,6 +1,5 @@
 import GridIntensity from './gridintensity'
 
-
 GridIntensity.prototype.fetch = fetch
 GridIntensity.prototype.localStorage = localStorage
 

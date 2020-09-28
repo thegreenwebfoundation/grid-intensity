@@ -1,6 +1,5 @@
 import GridIntensity from "./node"
-import debugLib from "debug"
-const debug = debugLib("tgwf:test:gridIntensity")
+
 
 
 // not sure how to mock this, so using an array here as it's the slowest part of the test

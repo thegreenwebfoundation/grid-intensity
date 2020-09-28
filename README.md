@@ -13,12 +13,12 @@ The dream is for this to be built into the browser, so we learn as web makers to
 ## Usage
 
 ```js
-const GridIntensity = require('gridintensity-polyfill')
+import GridIntensity from '@tgwf/grid-intensity'
 
 // initialise
-gridIntensity = GridIntensity()
+grid = GridIntensity()
 
-const carbonIndex = await gridIntensity.getCarbonIndex()
+const carbonIndex = await grid.getCarbonIndex()
 
 if (carbonIndex == 'low')  {
   // Huzzah! Energy is cheap! The wind is blowing and the sun is out,
@@ -64,10 +64,10 @@ This API is designed to make that easier. It pulls data from open data sources, 
 _This is very incomplete. Sorry about that. I hope this gives an idea of where you can help if you're interested._
 
 - [ ] Add support for API providers beyond the UK national grid (Electricity Map would be WONDERFUL)
-- [ ] Add a 24 hour forward looking check, so there's less need to hit a single API endpoint. This is how forward markets for energy work for reals anyway.
+- [x] Add a 24 hour forward looking check, so there's less need to hit a single API endpoint. This is how forward markets for energy work for reals anyway.
 - [ ] Add geo support to either use geolocation features in a browser, or some kind of educated guesses serverside so we use the correct country for grid intensity
 - [ ] Write post to explain the idea in more detail
 - [ ] Flesh out issues, and guidelines for contribution.
 - [ ] Figure out how to get this into the the green web browser extension, to demonstrate how carbon awareness should be part of browsers by default. `user-agents` of change!
-- [ ] Publish to NPM, and generate the compiled regular js into lib
+- [x] Publish to NPM, and generate the compiled regular js into lib
 - [ ] For browsers, include check for the kind of connection on a webpage, using the polyfill currently listed in the package.json

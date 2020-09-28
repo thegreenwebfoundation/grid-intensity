@@ -1,7 +1,4 @@
-
-
 import settings from './defaultSettings'
-
 const intensityProvider = settings.uk
 
 function GridIntensity() {
@@ -32,14 +29,13 @@ GridIntensity.prototype.getLocalIntensityData = function () {
     return []
   }
 
-  // console.log(intervals.data)
+
   // try to parse what we already have
   try {
     parsedIntervals = JSON.parse(intervalsString)
-    console.log({ parsedIntervals })
+    console.debug({ parsedIntervals })
     return parsedIntervals
   } catch (err) {
-
     storage.setItem('gridIntensityData', [])
     return []
   }
@@ -62,7 +58,6 @@ GridIntensity.prototype.getNextInterval = function (options) {
     const until = Date.parse(inter.to)
 
     if (until > now) {
-
       return inter
     }
   }
@@ -78,10 +73,6 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   } else {
     now = new Date()
   }
-
-  // this only fetches the last date. If we fetch more dates ahead, we need to
-  // find the most closest date in the set to now, as we'd have more than
-  // one to choose from
 
   let latestReading
   latestReading = this.getNextInterval({ checkDate: now })
@@ -107,7 +98,11 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
 }
 
 GridIntensity.prototype.fetchIntensityData = async function () {
-  let res = await this.fetch(intensityProvider.api.current)
+
+  const now = Date()
+  const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
+  const urlString = `${before}${now.toISO()}${after}/`
+  let res = await this.fetch(urlString)
   this.data = await res.json()
   return this.data
 }
