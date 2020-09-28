@@ -1,7 +1,6 @@
 
-// import fetch from 'cross-fetch';
+
 import settings from './defaultSettings'
-import { DateTime, Interval } from 'luxon'
 
 const intensityProvider = settings.uk
 
@@ -12,7 +11,7 @@ function GridIntensity() {
 
 
 GridIntensity.prototype.setup = async function (localStorage, fetch) {
-  let fetchNewData
+
   this.data = this.getLocalIntensityData()
 
   if (this.data.length < 1) {
@@ -20,10 +19,8 @@ GridIntensity.prototype.setup = async function (localStorage, fetch) {
   }
 }
 GridIntensity.prototype.getLocalIntensityData = function () {
-  //  if we're not in a browser, use a localstorage polyfill
-  let storage = this.localStorage
 
-  // otherwise we're in a browser
+  let storage = this.localStorage
   const intervalsString = (storage.getItem('gridIntensityData'))
 
   if (!intervalsString) {
@@ -34,10 +31,6 @@ GridIntensity.prototype.getLocalIntensityData = function () {
   if (!intervalsString.length) {
     return []
   }
-  // if (intervals.data.length < 1) {
-  //   return []
-  // }
-
 
   // console.log(intervals.data)
   // try to parse what we already have
@@ -46,7 +39,7 @@ GridIntensity.prototype.getLocalIntensityData = function () {
     console.log({ parsedIntervals })
     return parsedIntervals
   } catch (err) {
-    // debug(`error, parsing the stored JSON`, err)
+
     storage.setItem('gridIntensityData', [])
     return []
   }
@@ -62,14 +55,14 @@ GridIntensity.prototype.getNextInterval = function (options) {
   if (options && options.checkDate) {
     now = options.checkDate
   } else {
-    now = DateTime.utc();
+    now = new Date()
   }
-  // console.debug({ now: now.toISO() })
-  // console.debug({ data: this.data.data })
   for (const inter of this.data.data) {
-    const until = DateTime.fromISO(inter.to)
+
+    const until = Date.parse(inter.to)
+
     if (until > now) {
-      // console.debug({ now: now.toISO() }, { until: until.toISO() })
+
       return inter
     }
   }
@@ -83,7 +76,7 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   if (options && options.checkDate) {
     now = options.checkDate
   } else {
-    now = DateTime.utc();
+    now = new Date()
   }
 
   // this only fetches the last date. If we fetch more dates ahead, we need to
@@ -101,15 +94,7 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
     latestReading = this.getNextInterval({ checkDate: now })
   }
 
-  const latestReadingDate = DateTime.fromISO(latestReading.to, { zone: "utc" })
-  // console.debug(now.toISO(), latestReadingDate.toISO())
-
-
-  if (now > latestReadingDate) {
-    // console.debug({ timeDiff: Interval.fromDateTimes(latestReadingDate, now).toDuration(['hours', 'minutes', 'seconds']).toObject() })
-  } else {
-    // console.debug({ timeDiff: Interval.fromDateTimes(now, latestReadingDate).toDuration(['hours', 'minutes', 'seconds']).toObject() })
-  }
+  const latestReadingDate = Date.parse(latestReading.to)
 
   if (now > latestReadingDate) {
     // fetch new data, as this out of date
