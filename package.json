@@ -6,8 +6,12 @@
   "module": "./src/index.js",
   "directories": {
     "lib": "./lib",
-    "src": "./src"
+    "src": "./src/*"
   },
+  "files": [
+    "lib/*",
+    "src"
+  ],
   "scripts": {
     "test": "jest",
     "build": "rollup --config",
