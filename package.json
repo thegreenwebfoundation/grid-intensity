@@ -1,6 +1,6 @@
 {
   "name": "@tgwf/gridintensity-polyfill",
-  "version": "0.0.8-0",
+  "version": "0.0.6",
   "description": "A polyfill to for carbon-aware design. Adds a gridintensity API to user agents.",
   "main": "./lib/index.js",
   "module": "./src/index.js",
