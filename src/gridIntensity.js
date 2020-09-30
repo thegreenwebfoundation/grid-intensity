@@ -99,9 +99,9 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
 
 GridIntensity.prototype.fetchIntensityData = async function () {
 
-  const now = Date()
+  const now = new Date()
   const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
-  const urlString = `${before}${now.toISO()}${after}/`
+  const urlString = `${before}${now.toISOString()}${after}/`
   let res = await this.fetch(urlString)
   this.data = await res.json()
   return this.data

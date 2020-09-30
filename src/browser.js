@@ -7,9 +7,9 @@ GridIntensity.prototype.localStorage = localStorage
 // TypeError: 'fetch' called on an object that does not implement interface Window
 GridIntensity.prototype.fetchIntensityData = async function () {
 
-  const now = Date()
+  const now = new Date()
   const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
-  const urlString = `${before}${now.toISO()}${after}/`
+  const urlString = `${before}${now.toISOString()}${after}/`
   let res = await fetch(urlString)
   this.data = await res.json()
   return this.data
