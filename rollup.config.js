@@ -1,20 +1,25 @@
 // rollup.config.js
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { getBabelOutputPlugin } from '@rollup/plugin-babel';
-import babel from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import {
+  getBabelOutputPlugin
+} from '@rollup/plugin-babel'
+import babel from '@rollup/plugin-babel'
+import {
+  terser
+} from 'rollup-plugin-terser'
 
 const browserBuild = {
-  input: 'src/browser.js',
+  input: 'src/index.js',
   output: {
     file: 'lib/gridintensity.browser.js',
     format: 'iife',
-    name: "GridItensity"
+    name: 'GridIntensity'
   },
   plugins: [
-    resolve(),
+    resolve({
+      browser: true
+    })
   ]
 }
 
@@ -24,40 +29,45 @@ const browserBuildMin = {
     file: 'lib/gridintensity.browser.min.js'
   },
   plugins: [
-    resolve(),
-    babel({ babelHelpers: 'bundled' }),
+    resolve({
+      browser: true
+    }),
+    babel({
+      babelHelpers: 'bundled',
+      exclude: 'node_modules/**'
+    }),
     terser()
   ]
 }
 
-
-
 const nodeBuild = {
-  input: 'src/node.js',
+  input: 'src/index.js',
   output: {
     file: 'lib/index.js',
     format: 'cjs',
-    exports: "default"
+    exports: 'default'
   },
   plugins: [
     resolve({
       preferBuiltins: true
     }),
     commonjs(),
-    babel({ babelHelpers: 'bundled' }),
+    babel({
+      babelHelpers: 'bundled'
+    }),
     getBabelOutputPlugin({
-      presets: [['@babel/preset-env',
-        {
-          targets: {
-            node: "current"
+      presets: [
+        [
+          '@babel/preset-env',
+          {
+            targets: {
+              node: 'current'
+            }
           }
-        }]]
+        ]
+      ]
     })
   ]
 }
 
-export default [
-  browserBuild,
-  browserBuildMin,
-  nodeBuild
-];
+export default [browserBuild, browserBuildMin, nodeBuild]

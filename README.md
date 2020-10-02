@@ -1,9 +1,8 @@
-
 # Grid intensity polyfill
 
 _A polyfill, to build awareness of carbon intensity into javascript programs - move your code through time and space for greener digital products._
 
-The dream is for this to be built into the browser, so we learn as web makers to do the right thing by default, and incorporate carbon-aware practices into how we work. Partly inspired by the work by [Michelle Thorne and Yulia Startsev on Firefox Eco Mode concepts][1] and sustainablity engineering, and by [Lucia Ye's recent  work on Onlign OS][2], and [David Sykes work on the energy onion model][3], and [Auke Hoekste's work on energy systems as ecosystems][4]
+The dream is for this to be built into the browser, so we learn as web makers to do the right thing by default, and incorporate carbon-aware practices into how we work. Partly inspired by the work by [Michelle Thorne and Yulia Startsev on Firefox Eco Mode concepts][1] and sustainablity engineering, and by [Lucia Ye's recent work on Onlign OS][2], and [David Sykes work on the energy onion model][3], and [Auke Hoekste's work on energy systems as ecosystems][4]
 
 [1]: https://discourse.mozilla.org/t/firefox-eco-mode-brainstorming-how-can-the-internet-tackle-the-climate-emergency/46582/2
 [2]: https://2020.rca.ac.uk/students/lu-ye/
@@ -16,11 +15,11 @@ The dream is for this to be built into the browser, so we learn as web makers to
 import GridIntensity from '@tgwf/grid-intensity-polyfill'
 
 // initialise
-grid = GridIntensity()
+const grid = GridIntensity()
 
 const carbonIndex = await grid.getCarbonIndex()
 
-if (carbonIndex == 'low')  {
+if (carbonIndex === 'low')  {
   // Huzzah! Energy is cheap! The wind is blowing and the sun is out,
   // the cost of energy is low, and the grid is also greener
   // than normal. Do network and CPU intensive stuff
@@ -57,16 +56,15 @@ cp ./lib/gridintensity.browser.js ./lib/gridintensity.browser.min.js ./public
 npx run serve public
 ```
 
-
 ### Background
 
 We know that the internet runs on electricity. That electricity comes from a mix of energy sources, including wind and solar, nuclear power, biomass, fossil gas, oil and coal and so on,
 
-We call this the *fuel mix*, and this fuel mix can impact on the *carbon intensity* of your code.
+We call this the _fuel mix_, and this fuel mix can impact on the _carbon intensity_ of your code.
 
 ### Move your code through time and space
 
-Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run *when* the grid is greener, or making it run *where* it's greener, like a CDN running on green power.
+Because the fuel mix will be different depending when and where you run your code, you can influence the carbon intensity of the code you write by moving it through time and space - either by making it run _when_ the grid is greener, or making it run _where_ it's greener, like a CDN running on green power.
 
 This API is designed to make that easier. It pulls data from open data sources, about the predicted carbon intensity of energy on the grid where code is run, and presents an object you can query, so you can make an application or website serve a different experience to end users based on the carbon intensity.
 
