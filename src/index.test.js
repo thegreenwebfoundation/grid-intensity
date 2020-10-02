@@ -1,3 +1,4 @@
+import del from 'del'
 import GridIntensity from './node'
 
 // not sure how to mock this, so using an array here as it's the slowest part of the test
@@ -10,6 +11,7 @@ describe('GridIntensity', () => {
 
   describe('fetching intensity data', () => {
     test('fetches data on instantion, if nothing is available locally', async () => {
+      await del(['scratch'])
       const grid = new GridIntensity()
 
       grid.fetchIntensityData = jest.fn((x) => {
@@ -21,6 +23,7 @@ describe('GridIntensity', () => {
       expect(grid.fetchIntensityData).toHaveBeenCalled()
     })
     test('fetches data on instantion, recovers gracefully when no data from API', async () => {
+      await del(['scratch'])
       const grid = new GridIntensity()
 
       grid.fetchIntensityData = jest.fn((x) => {

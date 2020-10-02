@@ -1,12 +1,17 @@
+/* global localStorage, window */
 import settings from './defaultSettings'
-const intensityProvider = settings.uk
+import { fetch } from 'whatwg-fetch'
 
 function GridIntensity() {
   this.data = []
-  this.intensityProvider = intensityProvider
+  this.intensityProvider = settings.uk
 }
 
-GridIntensity.prototype.setup = async function (localStorage, fetch) {
+GridIntensity.prototype.fetch = fetch
+GridIntensity.prototype.localStorage =
+  typeof window !== 'undefined' ? localStorage : undefined
+
+GridIntensity.prototype.setup = async function () {
   this.data = this.getLocalIntensityData()
 
   if (this.data.length < 1) {
@@ -16,7 +21,6 @@ GridIntensity.prototype.setup = async function (localStorage, fetch) {
 GridIntensity.prototype.getLocalIntensityData = function () {
   let storage = this.localStorage
   const intervalsString = storage.getItem('gridIntensityData')
-
   if (!intervalsString) {
     return []
   }
@@ -28,7 +32,7 @@ GridIntensity.prototype.getLocalIntensityData = function () {
 
   // try to parse what we already have
   try {
-    parsedIntervals = JSON.parse(intervalsString)
+    const parsedIntervals = JSON.parse(intervalsString)
     console.debug({
       parsedIntervals
     })
