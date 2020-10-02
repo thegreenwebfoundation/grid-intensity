@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.6] - 2020-09-30
 
-Oops. After a short lived foray into using various date math libraries, and switching back to native libraries, this did't work either.
+Oops. After a short lived foray into using various date math libraries, and switching back to native libraries, this didn't work either.
 
 ## [0.0.5] - 2020-09-28
 

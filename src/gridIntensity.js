@@ -6,9 +6,7 @@ function GridIntensity() {
   this.intensityProvider = intensityProvider
 }
 
-
 GridIntensity.prototype.setup = async function (localStorage, fetch) {
-
   this.data = this.getLocalIntensityData()
 
   if (this.data.length < 1) {
@@ -16,9 +14,8 @@ GridIntensity.prototype.setup = async function (localStorage, fetch) {
   }
 }
 GridIntensity.prototype.getLocalIntensityData = function () {
-
   let storage = this.localStorage
-  const intervalsString = (storage.getItem('gridIntensityData'))
+  const intervalsString = storage.getItem('gridIntensityData')
 
   if (!intervalsString) {
     return []
@@ -29,11 +26,12 @@ GridIntensity.prototype.getLocalIntensityData = function () {
     return []
   }
 
-
   // try to parse what we already have
   try {
     parsedIntervals = JSON.parse(intervalsString)
-    console.debug({ parsedIntervals })
+    console.debug({
+      parsedIntervals
+    })
     return parsedIntervals
   } catch (err) {
     storage.setItem('gridIntensityData', [])
@@ -46,7 +44,6 @@ GridIntensity.prototype.getNextInterval = function (options) {
   // greater, and returns the first one to be greater than now, AND less than
   // 31mins ahead too
 
-
   let now
   if (options && options.checkDate) {
     now = options.checkDate
@@ -54,7 +51,6 @@ GridIntensity.prototype.getNextInterval = function (options) {
     now = new Date()
   }
   for (const inter of this.data.data) {
-
     const until = Date.parse(inter.to)
 
     if (until > now) {
@@ -62,9 +58,7 @@ GridIntensity.prototype.getNextInterval = function (options) {
     }
   }
   return null
-
 }
-
 
 GridIntensity.prototype.getCarbonIndex = async function (options) {
   let now
@@ -75,14 +69,18 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   }
 
   let latestReading
-  latestReading = this.getNextInterval({ checkDate: now })
+  latestReading = this.getNextInterval({
+    checkDate: now
+  })
   if (!latestReading) {
     // fetch new data, and try again
     const newIntervals = await this.fetchIntensityData()
     let storage = this.localStorage
     storage.setItem('gridIntensityData', JSON.stringify(newIntervals))
     this.data = newIntervals
-    latestReading = this.getNextInterval({ checkDate: now })
+    latestReading = this.getNextInterval({
+      checkDate: now
+    })
   }
 
   const latestReadingDate = Date.parse(latestReading.to)
@@ -94,13 +92,13 @@ GridIntensity.prototype.getCarbonIndex = async function (options) {
   }
 
   return latestReading.intensity.index
-
 }
 
 GridIntensity.prototype.fetchIntensityData = async function () {
-
   const now = new Date()
-  const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
+  const [before, after] = this.intensityProvider.api.forwardLooking.split(
+    '{from}'
+  )
   const urlString = `${before}${now.toISOString()}${after}/`
   let res = await this.fetch(urlString)
   this.data = await res.json()
