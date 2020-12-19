@@ -18,4 +18,11 @@ GridIntensity.fetchIntensityData = async function () {
   return this.data
 }
 
+GridIntensity.getCarbonIndex = async function (options) {
+  let now = this.getInterval(options)
+  const latestReading = await this.getReadingForInterval(now)
+  return latestReading.intensity.index
+}
+
 export default GridIntensity
+

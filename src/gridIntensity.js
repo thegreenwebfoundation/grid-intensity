@@ -50,34 +50,36 @@ const GridIntensityMixin = {
     }
     return null
   },
-  async getCarbonIndex(options) {
+  getInterval(options) {
     let now
     if (options && options.checkDate) {
       now = options.checkDate
     } else {
       now = new Date()
     }
+    return now
+  },
 
+  async getReadingForInterval(requiredDate) {
     let latestReading
-    latestReading = this.getNextInterval({ checkDate: now })
+    latestReading = this.getNextInterval({ checkDate: requiredDate })
     if (!latestReading) {
       // fetch new data, and try again
       const newIntervals = await this.fetchIntensityData()
       let storage = this.localStorage
       storage.setItem("gridIntensityData", JSON.stringify(newIntervals))
       this.data = newIntervals
-      latestReading = this.getNextInterval({ checkDate: now })
+      latestReading = this.getNextInterval({ checkDate: requiredDate })
     }
 
     const latestReadingDate = Date.parse(latestReading.to)
 
-    if (now > latestReadingDate) {
+    if (requiredDate > latestReadingDate) {
       // fetch new data, as this out of date
       this.data = await this.fetchIntensityData()
       latestReading = this.data.data[0]
     }
-
-    return latestReading.intensity.index
+    return latestReading
   }
 }
 
