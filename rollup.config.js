@@ -1,42 +1,33 @@
 // rollup.config.js
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import { getBabelOutputPlugin } from '@rollup/plugin-babel';
-import babel from '@rollup/plugin-babel';
-import { terser } from 'rollup-plugin-terser';
-
+import resolve from "@rollup/plugin-node-resolve"
+import commonjs from "@rollup/plugin-commonjs"
+import { getBabelOutputPlugin } from "@rollup/plugin-babel"
+import babel from "@rollup/plugin-babel"
+import { terser } from "rollup-plugin-terser"
 
 const browserBuild = {
-  input: 'src/browser.js',
+  input: "src/browser.js",
   output: {
-    file: 'lib/gridintensity.browser.js',
-    format: 'iife',
+    file: "lib/gridintensity.browser.js",
+    format: "iife",
     name: "GridItensity"
   },
-  plugins: [
-    resolve(),
-  ]
+  plugins: [resolve()]
 }
 
 const browserBuildMin = {
-  input: 'src/browser.bundle.js',
+  input: "src/browser.bundle.js",
   output: {
-    file: 'lib/gridintensity.browser.min.js'
+    file: "lib/gridintensity.browser.min.js"
   },
-  plugins: [
-    resolve(),
-    babel({ babelHelpers: 'bundled' }),
-    terser()
-  ]
+  plugins: [resolve(), babel({ babelHelpers: "bundled" }), terser()]
 }
 
-
-
 const nodeBuild = {
-  input: 'src/node.js',
+  input: "src/node.js",
   output: {
-    file: 'lib/index.js',
-    format: 'cjs',
+    file: "lib/index.js",
+    format: "cjs",
     exports: "default"
   },
   plugins: [
@@ -44,20 +35,20 @@ const nodeBuild = {
       preferBuiltins: true
     }),
     commonjs(),
-    babel({ babelHelpers: 'bundled' }),
+    babel({ babelHelpers: "bundled" }),
     getBabelOutputPlugin({
-      presets: [['@babel/preset-env',
-        {
-          targets: {
-            node: "current"
+      presets: [
+        [
+          "@babel/preset-env",
+          {
+            targets: {
+              node: "current"
+            }
           }
-        }]]
+        ]
+      ]
     })
   ]
 }
 
-export default [
-  browserBuild,
-  browserBuildMin,
-  nodeBuild
-];
+export default [browserBuild, browserBuildMin, nodeBuild]

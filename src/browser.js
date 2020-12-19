@@ -1,14 +1,17 @@
-import GridIntensity from './gridintensity'
+import GridIntensityMixin from "./gridintensity"
 
-GridIntensity.prototype.fetch = fetch
-GridIntensity.prototype.localStorage = localStorage
+const GridIntensity = Object.create(GridIntensityMixin)
 
-// we need to override the function here because we otherwise get the error in browsers
-// TypeError: 'fetch' called on an object that does not implement interface Window
-GridIntensity.prototype.fetchIntensityData = async function () {
+GridIntensity.fetch = fetch
+GridIntensity.localStorage = localStorage
+GridIntensity.data = []
+GridIntensity.intensityProvider = settings.uk
 
+GridIntensity.fetchIntensityData = async function () {
   const now = new Date()
-  const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
+  const [before, after] = this.intensityProvider.api.forwardLooking.split(
+    "{from}"
+  )
   const urlString = `${before}${now.toISOString()}${after}/`
   let res = await fetch(urlString)
   this.data = await res.json()
