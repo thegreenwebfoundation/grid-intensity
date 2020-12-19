@@ -1,4 +1,4 @@
-import GridIntensityMixin from "./gridintensity"
+import GridIntensityMixin from "./gridIntensity"
 
 const GridIntensity = Object.create(GridIntensityMixin)
 
