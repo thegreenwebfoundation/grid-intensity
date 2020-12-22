@@ -23,6 +23,16 @@ const browserBuildMin = {
   plugins: [resolve(), babel({ babelHelpers: "bundled" }), terser()]
 }
 
+const browserExample = {
+  input: "src/example.js",
+  output: {
+    file: "public/example.js",
+    format: "iife",
+    name: "GridItensity"
+  },
+  plugins: [resolve()]
+}
+
 const nodeBuild = {
   input: "src/node.js",
   output: {
@@ -51,4 +61,4 @@ const nodeBuild = {
   ]
 }
 
-export default [browserBuild, browserBuildMin, nodeBuild]
+export default [browserBuild, browserBuildMin, nodeBuild, browserExample]

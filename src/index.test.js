@@ -8,7 +8,7 @@ describe("GridIntensity", () => {
       '{"data":[{"from":"2020-09-19T11:30Z","to":"2020-09-19T12:00Z","intensity":{"forecast":83,"actual":85,"index":"low"}}]}'
   })
 
-  describe("fetching intensity data", () => {
+  describe.only("fetching intensity data", () => {
     test("fetches data on instantion, if nothing is available locally", async () => {
       const grid = Object.create(GridIntensity)
 
@@ -72,16 +72,18 @@ describe("GridIntensity", () => {
       expect(grid.getLocalIntensityData).toHaveBeenCalled()
     })
 
-    test("makes new request for data if local store is out of date", () => {
+    test.only("makes new request for data if local store is out of date", async () => {
       // arrange
       const grid = Object.create(GridIntensity)
       grid.data = JSON.parse(fakeData)
       grid.fetchIntensityData = jest.fn((x) => {
-        return Promise.resolve(JSON.parse(fakeData))
+        return Promise.resolve(JSON.parse(fakeData)).catch(function(e) {
+          console.log("OOOOO")
+        })
       })
 
       // act
-      grid.getCarbonIndex()
+      await grid.getCarbonIndex()
 
       // assert
       expect(grid.fetchIntensityData).toHaveBeenCalled()

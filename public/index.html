@@ -1,41 +1,32 @@
 <html>
-  <head>
-    <meta charset="utf-8" />
 
-    <style>
-      .low-grid-intensity {
-        background-color: #1cdcb4;
-        transition-duration: 1s;
-      }
+<head>
+	<meta charset="utf-8" />
 
-      .moderate-grid-intensity {
-        background-color: #51aee2;
-        transition-duration: 1s;
-      }
+	<style>
+		.low-grid-intensity {
+			background-color: #1cdcb4;
+			transition-duration: 1s;
+		}
 
-      .high-grid-intensity {
-        background-color: #ff7900;
-        transition-duration: 1s;
-      }
-    </style>
-  </head>
+		.moderate-grid-intensity {
+			background-color: #51aee2;
+			transition-duration: 1s;
+		}
 
-  <body class="">
-    <h1>The grid intensity in your part of the world right now is:</h1>
-    <h2 class="result">(result goes here)</h2>
+		.high-grid-intensity {
+			background-color: #ff7900;
+			transition-duration: 1s;
+		}
 
-    <script src="./gridintensity.browser.min.js"></script>
-    <script>
-      async function main() {
-        const grid = Object.create(GridIntensity)
-        await grid.setup()
-        const index = await grid.getCarbonIndex()
-        console.log({ index })
-        document.querySelector(".result").textContent = index
-        document.querySelector("body").classList = []
-        document.querySelector("body").classList.add(`${index}-grid-intensity`)
-      }
-      main()
-    </script>
-  </body>
+	</style>
+</head>
+
+<body class="">
+	<h1>The grid intensity in your part of the world right now is:</h1>
+	<h2 class="result">(result goes here)</h2>
+
+	<script src="./example.js"></script>
+</body>
+
 </html>
