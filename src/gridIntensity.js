@@ -1,5 +1,5 @@
 const GridIntensityMixin = {
-  async setup(localStorage, fetch) {
+  async setup() {
     this.data = this.getLocalIntensityData()
 
     if (this.data.length < 1) {
