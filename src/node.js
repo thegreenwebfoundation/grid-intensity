@@ -13,7 +13,7 @@ GridIntensity.localStorage = localStorage
 GridIntensity.data = []
 GridIntensity.intensityProvider = settings.uk
 
-GridIntensity.fetchIntensityData = async function fetchIntensityData() {
+GridIntensity.fetchIntensityData = async function () {
   const now = new Date()
   const [before, after] = this.intensityProvider.api.forwardLooking.split(
     "{from}"
