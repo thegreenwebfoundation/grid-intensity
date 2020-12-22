@@ -80,7 +80,29 @@ const GridIntensityMixin = {
       latestReading = this.data.data[0]
     }
     return latestReading
+  },
+  async fetchIntensityData() {
+    const now = new Date()
+  const [before, after] = this.intensityProvider.api.forwardLooking.split(
+    "{from}"
+  )
+  const urlString = `${before}${now.toISOString()}${after}/`
+  let res
+  try {
+    res = await this.fetch(urlString)
+    this.data = await res.json()
+  } catch (error) {
+      console.error("Couldn't fetch new data. Doing nothing further")
+      console.error(error)
   }
+  return this.data
+  },
+  async getCarbonIndex(options) {
+    let now = this.getInterval(options)
+    const latestReading = await this.getReadingForInterval(now)
+    return latestReading.intensity.index
+  }
+
 }
 
 export default GridIntensityMixin
