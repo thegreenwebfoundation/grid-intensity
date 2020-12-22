@@ -1,18 +1,29 @@
-import GridIntensity from './gridintensity'
+// 3rd party / native libs
+import debugLib from 'debug'
 
-GridIntensity.prototype.fetch = fetch
-GridIntensity.prototype.localStorage = localStorage
+// local to this project
+import GridIntensityMixin from "./gridIntensity"
+import settings from "./defaultSettings"
 
-// we need to override the function here because we otherwise get the error in browsers
-// TypeError: 'fetch' called on an object that does not implement interface Window
-GridIntensity.prototype.fetchIntensityData = async function () {
+// set up our objects
+const GridIntensity = Object.create(GridIntensityMixin)
+// const debug = debugLib('tgwf.Gridintensity.node')
 
-  const now = new Date()
-  const [before, after] = this.intensityProvider.api.forwardLooking.split("{from}")
-  const urlString = `${before}${now.toISOString()}${after}/`
-  let res = await fetch(urlString)
-  this.data = await res.json()
+GridIntensity.localStorage = window.localStorage
+GridIntensity.data = []
+GridIntensity.intensityProvider = settings.uk
+
+GridIntensity.fetchIntensityData = async function () {
+  const urlString = this.buildFetchUrl()
+  try {
+    const res = await fetch(urlString)
+    this.data = await res.json()
+  } catch (error) {
+    console.error("Couldn't fetch new data. Doing nothing further")
+    console.error(error)
+  }
   return this.data
 }
 
 export default GridIntensity
+
