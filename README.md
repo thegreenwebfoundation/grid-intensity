@@ -1,6 +1,12 @@
 
 # Grid intensity polyfill
 
+
+> [!NOTE]  
+> This library is used on a few live sites but if you're coming to this new, please see our new work on [grid aware websites](https://github.com/thegreenwebfoundation/grid-aware-websites/), which is under active, funded development.
+
+
+
 _A polyfill, to build awareness of carbon intensity into javascript programs - move your code through time and space for greener digital products._
 
 The dream is for this to be built into the browser, so we learn as web makers to do the right thing by default, and incorporate carbon-aware practices into how we work. Partly inspired by the work by [Michelle Thorne and Yulia Startsev on Firefox Eco Mode concepts][1] and sustainablity engineering, and by [Lucia Ye's recent  work on Onlign OS][2], and [David Sykes work on the energy onion model][3], and [Auke Hoekste's work on energy systems as ecosystems][4]
